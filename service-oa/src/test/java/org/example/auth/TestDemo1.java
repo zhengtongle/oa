@@ -1,14 +1,11 @@
 package org.example.auth;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.example.auth.controller.RoleController;
 import org.example.auth.mapper.SysRoleMapper;
 import org.example.model.system.SysRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 @SpringBootTest
 public class TestDemo1 {
