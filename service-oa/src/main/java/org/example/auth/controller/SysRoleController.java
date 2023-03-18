@@ -10,6 +10,7 @@ import org.example.result.Result;
 import org.example.vo.system.SysRoleQueryVo;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,15 +36,14 @@ public class SysRoleController {
 
     @ApiOperation("条件分页查询")
     @GetMapping("{page}/{limit}")
-    public Result<Page<SysRole>> page(@PathParam("page") Long page, @PathParam("limit") Long limit, SysRoleQueryVo sysRoleQueryVo) {
-
+    public Result<Page<SysRole>> page(@PathVariable("page") Long page, @PathVariable("limit") Long limit, SysRoleQueryVo sysRoleQueryVo) {
         // 创建Page对象 传递分页参数
         Page<SysRole> pageParam = new Page<>(page, limit);
         // 创建查询条件
         LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
-//        queryWrapper.eq()
-        if (StringUtils.isEmpty(sysRoleQueryVo.getRoleName())) {
-            queryWrapper.eq(SysRole::getRoleName, sysRoleQueryVo.getRoleName());
+        String roleName = sysRoleQueryVo.getRoleName();
+        if (!StringUtils.isEmpty(roleName)) {
+            queryWrapper.like(SysRole::getRoleName, roleName);
         }
         // 调用实现
         return Result.ok(sysRoleService.page(pageParam, queryWrapper));
